@@ -17,7 +17,7 @@ jobs:
           POSTGRES_PASSWORD: root
           POSTGRES_DB: testdb
         ports:
-          - 5432:5432
+          - 5433:5433
         options: --health-cmd="pg_isready -U codiprogs" --health-interval=5s --health-timeout=5s --health-retries=3
 
     steps:

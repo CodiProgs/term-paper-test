@@ -17,8 +17,8 @@ WORKDIR /app
 COPY --from=builder /app ./
 
 RUN yarn install --production
+RUN npx prisma generate
 
 EXPOSE 4200
 
-# Запускаем приложение
 CMD ["yarn", "start:prod"]
