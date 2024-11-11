@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY frontend/package*.json ./frontend/
 WORKDIR /app/frontend
-RUN yarn install  # Устанавливаем зависимости для frontend
+RUN yarn install 
 
 COPY frontend/ ./frontend/
 
@@ -14,7 +14,7 @@ WORKDIR /app
 
 COPY backend/package*.json ./backend/
 WORKDIR /app/backend
-RUN yarn install  # Устанавливаем зависимости для backend
+RUN yarn install  
 
 COPY backend/ ./backend/
 
@@ -28,10 +28,10 @@ COPY --from=builder /app/frontend /app/frontend
 COPY --from=builder /app/backend /app/backend
 
 WORKDIR /app/frontend
-RUN yarn install --production  # Для frontend
+RUN yarn install --production 
 
 WORKDIR /app/backend
-RUN yarn install --production  # Для backend
+RUN yarn install --production 
 
 EXPOSE 3000 4200
 
