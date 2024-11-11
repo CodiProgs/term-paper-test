@@ -27,8 +27,8 @@ jobs:
 
       - name: Build Docker images for Frontend (Next.js) and Backend (NestJS)
         run: |
-          docker build -t my-next-app frontend
-          docker build -t my-nest-api backend
+          docker build -t my-next-app -f ./frontend/dockerfile .
+          docker build -t my-nest-api -f ./backend/dockerfile .
 
       - name: Push Docker images to DockerHub
         run: |
