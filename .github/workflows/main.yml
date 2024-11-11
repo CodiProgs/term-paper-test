@@ -27,18 +27,10 @@ jobs:
 
       - name: Build Docker images for Frontend (Next.js) and Backend (NestJS)
         run: |
-          # Строим образ для frontend (Next.js)
-          docker build -t my-next-app ./frontend
-          # Строим образ для backend (NestJS)
-          docker build -t my-nest-api ./backend
+          docker build -t my-next-app frontend
+          docker build -t my-nest-api backend
 
       - name: Push Docker images to DockerHub
         run: |
           docker push my-next-app
           docker push my-nest-api
-
-      - name: Deploy to server or Kubernetes
-        run: |
-          # Пример деплоя через SSH на сервер
-          ssh -i ${{ secrets.SSH_PRIVATE_KEY }} user@your-server-ip "docker pull my-next-app && docker pull my-nest-api && docker-compose up -d"
-
