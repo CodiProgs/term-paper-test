@@ -8,6 +8,8 @@ RUN yarn install
 
 COPY frontend/ ./frontend/
 
+RUN ls -la /app/frontend/src
+
 RUN yarn build
 
 WORKDIR /app
@@ -28,7 +30,7 @@ COPY --from=builder /app/frontend /app/frontend
 COPY --from=builder /app/backend /app/backend
 
 WORKDIR /app/frontend
-RUN yarn install --production 
+RUN yarn install --production  
 
 WORKDIR /app/backend
 RUN yarn install --production 
