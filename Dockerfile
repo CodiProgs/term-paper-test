@@ -2,24 +2,25 @@ FROM node:20 AS build
 
 WORKDIR /app
 
-COPY backend/package.json backend/yarn.lock ./backend/
-WORKDIR /app/backend
+# next js 
+COPY frontend/package*.json ./
 RUN yarn install
-
+COPY frontend/ .
+RUN yarn build
+FROM node:20-buster
 WORKDIR /app
-COPY frontend/package.json frontend/yarn.lock ./frontend/
-WORKDIR /app/frontend
+COPY --from=builder /app ./
+RUN yarn install --production
+
+# nest js
+COPY backend/package*.json ./
 RUN yarn install
-
-COPY frontend/ ./frontend/  
-
-WORKDIR /app/frontend
-RUN yarn run build
-
-WORKDIR /app/backend
-RUN yarn run build
-
+COPY backend/ .
+RUN yarn build
+FROM node:20-buster
 WORKDIR /app
+COPY --from=builder /app ./
+RUN yarn install --production
 
 EXPOSE 3000 4200
 
