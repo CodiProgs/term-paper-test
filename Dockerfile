@@ -2,20 +2,20 @@ FROM node:20 AS build
 
 WORKDIR /app
 
-COPY backend/package.json backend/package-lock.json ./backend/
+COPY backend/package.json backend/yarn.lock ./backend/
 WORKDIR /app/backend
-RUN yarn install
+RUN yarn install  # Используем yarn для установки зависимостей
 
 WORKDIR /app
-COPY frontend/package.json frontend/package-lock.json ./frontend/
+COPY frontend/package.json frontend/yarn.lock ./frontend/
 WORKDIR /app/frontend
-RUN yarn install
+RUN yarn install  # Используем yarn для установки зависимостей
 
 WORKDIR /app/frontend
-RUN yarn run build
+RUN yarn run build  # Собираем frontend с помощью yarn
 
 WORKDIR /app/backend
-RUN yarn run build
+RUN yarn run build  # Собираем backend с помощью yarn
 
 WORKDIR /app
 
