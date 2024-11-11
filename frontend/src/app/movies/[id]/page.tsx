@@ -1,15 +1,15 @@
 import type { Metadata } from 'next'
-import { EditGenre } from './EditGenre'
+import { Movie } from './Movie'
 
 export const metadata: Metadata = {
-	title: 'Редактирование жанра',
+	title: 'Фильм',
 }
 
-export default async function EditGenrePage({
+export default async function MoviePage({
 	params,
 }: {
 	params: Promise<{ id: string }>
 }) {
 	const { id } = await params
-	return <EditGenre id={id} />
+	return <Movie id={id} />
 }

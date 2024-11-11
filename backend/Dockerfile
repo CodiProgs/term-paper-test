@@ -1,4 +1,4 @@
-FROM node:16-buster AS builder
+FROM node:20-buster AS builder
 
 WORKDIR /app
 
@@ -10,7 +10,7 @@ COPY backend/ .
 
 RUN yarn build
 
-FROM node:16-buster
+FROM node:20-buster
 
 WORKDIR /app
 
@@ -20,5 +20,4 @@ RUN yarn install --production
 
 EXPOSE 4200
 
-# Запускаем приложение
 CMD ["yarn", "start:prod"]

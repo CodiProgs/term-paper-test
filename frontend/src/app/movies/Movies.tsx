@@ -29,7 +29,9 @@ export function Movies() {
 							className='text-lg bg-[#1C1C1C] p-4 rounded-md shadow-md'
 							key={movie.id}
 						>
-							<h2 className='text-xl font-bold'>{movie.title}</h2>
+							<Link href={pages.movie(movie.id)}>
+								<h2 className='text-xl font-bold'>{movie.title}</h2>
+							</Link>
 							<div>
 								<p>
 									Год выпуска: {format(new Date(movie.release), 'd MMMM yyyy')}
