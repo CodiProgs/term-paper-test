@@ -4,18 +4,20 @@ WORKDIR /app
 
 COPY backend/package.json backend/yarn.lock ./backend/
 WORKDIR /app/backend
-RUN yarn install 
+RUN yarn install
 
 WORKDIR /app
 COPY frontend/package.json frontend/yarn.lock ./frontend/
 WORKDIR /app/frontend
-RUN yarn install  
+RUN yarn install
+
+COPY frontend/ ./frontend/  
 
 WORKDIR /app/frontend
-RUN yarn run build  
+RUN yarn run build
 
 WORKDIR /app/backend
-RUN yarn run build 
+RUN yarn run build
 
 WORKDIR /app
 
