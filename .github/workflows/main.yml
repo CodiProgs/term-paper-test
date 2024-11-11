@@ -3,7 +3,7 @@ name: CI/CD for Next.js and NestJS with Docker
 on:
   push:
     branches:
-      - main 
+      - main
   pull_request:
     branches:
       - main
@@ -13,14 +13,11 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-
       - name: Checkout code
         uses: actions/checkout@v3
 
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-
 
       - name: Log in to DockerHub
         uses: docker/login-action@v2
@@ -28,14 +25,20 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-
-      - name: Build Docker images for Next.js and NestJS
+      - name: Build Docker images for Frontend (Next.js) and Backend (NestJS)
         run: |
-          docker build -t my-next-app -f ./frontend/dockerfile .
-          docker build -t my-nest-api -f ./backend/dockerfile .
-
+          # Строим образ для frontend (Next.js)
+          docker build -t my-next-app ./frontend
+          # Строим образ для backend (NestJS)
+          docker build -t my-nest-api ./backend
 
       - name: Push Docker images to DockerHub
         run: |
           docker push my-next-app
           docker push my-nest-api
+
+      - name: Deploy to server or Kubernetes
+        run: |
+          # Пример деплоя через SSH на сервер
+          ssh -i ${{ secrets.SSH_PRIVATE_KEY }} user@your-server-ip "docker pull my-next-app && docker pull my-nest-api && docker-compose up -d"
+

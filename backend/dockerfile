@@ -1,15 +1,24 @@
-FROM node:18-alpine
+FROM node:16-buster AS builder
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY backend/package*.json ./
 
 RUN yarn install
 
-COPY . .
+COPY backend/ .
 
-RUN yarn run build
+RUN yarn build
+
+FROM node:16-buster
+
+WORKDIR /app
+
+COPY --from=builder /app ./
+
+RUN yarn install --production
 
 EXPOSE 4200
 
-CMD ["yarn", "run", "start:prod"]
+# Запускаем приложение
+CMD ["yarn", "start:prod"]
