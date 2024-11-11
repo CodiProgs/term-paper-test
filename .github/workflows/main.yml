@@ -1,4 +1,4 @@
-name: CI/CD for Next.js + NestJS + PostgreSQL
+name: Build and Deploy Docker Image
 
 on:
   push:
@@ -24,28 +24,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Cache Docker layers
+        uses: actions/cache@v2
         with:
-          node-version: '20'
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
 
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Build Docker images for Frontend (Next.js) and Backend (NestJS)
+      - name: Build Docker image
         run: |
-          docker build -t codiprogswork/my-next-app:latest -f ./frontend/Dockerfile .
-          docker build -t codiprogswork/my-nest-api:latest -f ./backend/Dockerfile .
+          docker build -t codiprogswork/my-fullstack-app -f ./Dockerfile .
 
-      - name: Push Docker images to DockerHub
+      - name: Push Docker image
         run: |
-          docker push codiprogswork/my-next-app:latest
-          docker push codiprogswork/my-nest-api:latest
+          docker push codiprogswork/my-fullstack-app
 
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          NEXT_PUBLIC_SERVER_URL: ${{ secrets.NEXT_PUBLIC_SERVER_URL }}
+      - name: Run Docker container with environment variables
+        run: |
+          docker run -e DATABASE_URL=${{ secrets.DATABASE_URL }} -p 3000:3000 codiprogswork/my-fullstack-app
 
