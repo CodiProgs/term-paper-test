@@ -4,18 +4,18 @@ WORKDIR /app
 
 COPY backend/package.json backend/yarn.lock ./backend/
 WORKDIR /app/backend
-RUN yarn install  # Используем yarn для установки зависимостей
+RUN yarn install 
 
 WORKDIR /app
 COPY frontend/package.json frontend/yarn.lock ./frontend/
 WORKDIR /app/frontend
-RUN yarn install  # Используем yarn для установки зависимостей
+RUN yarn install  
 
 WORKDIR /app/frontend
-RUN yarn run build  # Собираем frontend с помощью yarn
+RUN yarn run build  
 
 WORKDIR /app/backend
-RUN yarn run build  # Собираем backend с помощью yarn
+RUN yarn run build 
 
 WORKDIR /app
 
