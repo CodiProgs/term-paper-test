@@ -45,7 +45,7 @@ jobs:
           docker push codiprogswork/my-next-app:latest
           docker push codiprogswork/my-nest-api:latest
 
-      env:
-        DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        NEXT_PUBLIC_SERVER_URL: ${{ secrets.NEXT_PUBLIC_SERVER_URL }}
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          NEXT_PUBLIC_SERVER_URL: ${{ secrets.NEXT_PUBLIC_SERVER_URL }}
 
