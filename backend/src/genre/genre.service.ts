@@ -6,13 +6,13 @@ import { GenreDto } from './dto/genre.dto'
 export class GenreService {
 	constructor(private readonly prisma: PrismaService) {}
 
-	async findOne(id: string) {
+	async getById(id: string) {
 		return this.prisma.genre.findUnique({
 			where: { id }
 		})
 	}
 
-	async findAll() {
+	async getAll() {
 		return this.prisma.genre.findMany()
 	}
 

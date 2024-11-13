@@ -15,13 +15,13 @@ export class GenreController {
 	constructor(private readonly genreService: GenreService) {}
 
 	@Get(':id')
-	findOne(@Param('id') id: string) {
-		return this.genreService.findOne(id)
+	getById(@Param('id') id: string) {
+		return this.genreService.getById(id)
 	}
 
 	@Get()
-	findAll() {
-		return this.genreService.findAll()
+	getAll() {
+		return this.genreService.getAll()
 	}
 
 	@Post()
